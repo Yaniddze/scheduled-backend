@@ -17,11 +17,11 @@ namespace Domain.UseCases.Account.Login
     public class LoginUseCase: IUseCase<LoginInput>
     {
         private readonly IMediator _mediator;
-        private readonly SignInManager<Entities.User> _signInManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IAppContext _context;
         private readonly ILogger<LoginUseCase> _logger;
 
-        public LoginUseCase(IMediator mediator, SignInManager<Entities.User> signInManager, IAppContext context, 
+        public LoginUseCase(IMediator mediator, SignInManager<User> signInManager, IAppContext context, 
             ILogger<LoginUseCase> logger)
         {
             _mediator = mediator;
