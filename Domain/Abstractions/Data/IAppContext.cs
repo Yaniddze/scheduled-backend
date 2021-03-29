@@ -10,6 +10,7 @@ namespace Domain.Abstractions.Data
     public interface IAppContext: IUnitOfWorkCreator
     {
         DbSet<User> Users { get; set; }
+        DbSet<Group> Groups { get; set; }
         DbSet<TEntity> Set<TEntity>() where TEntity : class, IEntity;
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 

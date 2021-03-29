@@ -10,6 +10,9 @@ namespace Domain.Entities
     public class User : IdentityUser<int>, IEntity
     {
         public bool Deleted { get; private set; }
+
+        public IReadOnlyList<Group> Groups { get; set; }
+        public IReadOnlyList<Group> OwnedGroups { get; set; }
         
         public DateTime RegistrationDate { get; private set; }
 

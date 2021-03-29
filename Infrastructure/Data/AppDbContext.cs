@@ -26,6 +26,7 @@ namespace Infrastructure.Data
         }
         
         public DbSet<User> Users { get; set; }
+        public DbSet<Group> Groups { get; set; }
 
         public new DbSet<TEntity> Set<TEntity>() where TEntity : class, IEntity
             => base.Set<TEntity>();
