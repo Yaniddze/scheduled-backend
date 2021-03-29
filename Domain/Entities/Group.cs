@@ -12,5 +12,15 @@ namespace Domain.Entities
 
         public int OwnerId { get; set; }
         public User Owner { get; set; }
+
+        public Group(string name, User owner)
+        {
+            Name = name;
+
+            Owner = owner;
+            OwnerId = owner.Id;
+        }
+        
+        protected Group() {}
     }
 }
