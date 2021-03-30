@@ -10,6 +10,7 @@ using Schedule.Implementations;
 
 namespace Schedule.Controllers.Admin
 {
+    [Route("/admin/api/v1/subject")]
     public class SubjectAdminController: QueryController<SubjectViewModel, Subject, SubjectViewModel>
     {
         private readonly IUseCaseDispatcher _dispatcher;

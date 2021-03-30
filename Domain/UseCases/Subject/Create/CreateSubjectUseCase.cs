@@ -10,7 +10,12 @@ namespace Domain.UseCases.Subject.Create
     public class CreateSubjectUseCase: IUseCase<CreateSubjectInput>
     {
         private readonly IAppContext _context;
-        
+
+        public CreateSubjectUseCase(IAppContext context)
+        {
+            _context = context;
+        }
+
         public async Task<IOutput> Handle(CreateSubjectInput request, CancellationToken cancellationToken)
         {
             var subject = new Entities.Subject

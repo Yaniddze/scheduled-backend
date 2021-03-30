@@ -1,4 +1,5 @@
-﻿using Domain.Abstractions.Queries;
+﻿using AutoMapper;
+using Domain.Abstractions.Queries;
 
 namespace Domain.UseCases.Queries.Subject
 {
@@ -7,5 +8,13 @@ namespace Domain.UseCases.Queries.Subject
         public int Id { get; set; }
         public string Name { get; set; }
         public int TeacherId { get; set; }
+    }
+
+    public class SubjectViewModelProfile : Profile
+    {
+        public SubjectViewModelProfile()
+        {
+            CreateMap<Entities.Subject, SubjectViewModel>();
+        }
     }
 }
