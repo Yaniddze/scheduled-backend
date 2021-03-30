@@ -1,11 +1,11 @@
 # Build
-FROM mcr.microsoft.com/dotnet/core/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
 COPY . ./
 RUN dotnet publish WebApp/WebApp.csproj -c Release -o /app/publish
 
 # Runtime
-FROM mcr.microsoft.com/dotnet/core/aspnet:5.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS final
 RUN apt-get update && apt-get install -y --no-install-recommends libgdiplus
 #ENV TZ=Europe/Moscow
 #RUN apt-get update && apt-get install -y --no-install-recommends tzdata
