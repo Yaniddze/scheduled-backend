@@ -9,6 +9,7 @@ namespace Domain.Entities
         public string Name { get; set; }
 
         public IReadOnlyList<User> Members { get; set; }
+        public IReadOnlyList<GroupSubject> GroupSubjects { get; set; }
 
         public int OwnerId { get; set; }
         public User Owner { get; set; }
