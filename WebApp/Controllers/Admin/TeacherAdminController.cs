@@ -21,7 +21,7 @@ namespace Schedule.Controllers.Admin
             _dispatcher = dispatcher;
         }
         
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateTeacherInput request) => await _dispatcher.DispatchAsync(request);
         
         [HttpDelete("{id}")]
