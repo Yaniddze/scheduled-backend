@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Domain.Abstractions.Data;
 using Domain.Abstractions.Mediator;
@@ -25,11 +26,18 @@ namespace Domain.UseCases.Group.Join
         {
             var currentUser = await _mediator.Send(new GetCurrentUserInput(), cancellationToken);
 
-            var group = await _context.Groups.FirstOrDefaultAsync(x => x.Name == request.Name, cancellationToken);
+            var group = await _context.Groups
+                .Include(x => x.Members)
+                .FirstOrDefaultAsync(x => x.Name == request.Name, cancellationToken);
 
             if (group is null)
             {
                 return Failure("Группа не найдена");
+            }
+
+            if (group.Members.Any(x => x.Id == currentUser.Id))
+            {
+                return Failure("Вы уже состоите в этой группе");
             }
             
             group.Members.Add(currentUser);
