@@ -12,6 +12,11 @@ namespace Domain.UseCases.Queries.Teacher
 
         protected override IQueryable<Entities.Teacher> Filter(IQueryable<Entities.Teacher> query, TeacherViewModel filter)
         {
+            if (!string.IsNullOrEmpty(filter.Name))
+            {
+                return query.Where(x => x.Name.ToLower().Contains(filter.Name.ToLower()));
+            }
+            
             return query;
         }
     }

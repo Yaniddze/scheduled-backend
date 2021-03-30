@@ -3,7 +3,6 @@ using Domain.Entities;
 using Domain.UseCases.Queries;
 using Domain.UseCases.Queries.Teacher;
 using Domain.UseCases.Teacher.Create;
-using Domain.UseCases.Teacher.Remove;
 using Domain.UseCases.Teacher.Update;
 using Microsoft.AspNetCore.Mvc;
 using Schedule.Abstractions;
@@ -24,13 +23,7 @@ namespace Schedule.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateTeacherInput request) => await _dispatcher.DispatchAsync(request);
         
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id) => await _dispatcher.DispatchAsync(new RemoveTeacherInput
-        {
-            TeacherId = id
-        });
-        
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromBody] CreateTeacherInput request, [FromRoute] int id) => 
             await _dispatcher.DispatchAsync(new UpdateTeacherInput
             {
