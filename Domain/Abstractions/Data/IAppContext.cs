@@ -11,6 +11,9 @@ namespace Domain.Abstractions.Data
     {
         DbSet<User> Users { get; set; }
         DbSet<Group> Groups { get; set; }
+        DbSet<GroupSubject> GroupSubjects { get; set; }
+        DbSet<Subject> Subjects { get; set; }
+        DbSet<Teacher> Teachers { get; set; }
         DbSet<TEntity> Set<TEntity>() where TEntity : class, IEntity;
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
