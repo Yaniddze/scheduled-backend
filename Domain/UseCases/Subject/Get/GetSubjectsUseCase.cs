@@ -23,7 +23,8 @@ namespace Domain.UseCases.Subject.Get
                 .Select(x => new
                 {
                     x.Id,
-                    x.Name
+                    x.Name,
+                    TeacherName = x.Teacher.Name,
                 })
                 .ToListAsync(cancellationToken);
             

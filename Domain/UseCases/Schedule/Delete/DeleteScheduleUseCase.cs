@@ -34,6 +34,8 @@ namespace Domain.UseCases.Schedule.Delete
             }
 
             _context.GroupSubjects.Remove(group);
+
+            await _context.SaveChangesAsync(cancellationToken);
             
             return Success;
         }
