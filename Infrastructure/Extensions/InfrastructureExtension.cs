@@ -15,7 +15,8 @@ namespace Infrastructure.Extensions
                     options.UseNpgsql(connectionString);
                     options.EnableSensitiveDataLogging();
                 })
-                .AddScoped<IAppContext, AppDbContext>();
+                .AddScoped<IAppContext, AppDbContext>()
+                .AddScoped<IUnitOfWorkCreator, AppDbContext>();
         }
     }
 }
