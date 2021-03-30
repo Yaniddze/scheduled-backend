@@ -11,6 +11,6 @@ namespace Domain.Entities
         public Teacher Teacher { get; set; }
         public int TeacherId { get; set; }
 
-        public IReadOnlyList<GroupSubject> GroupSubjects { get; set; }
+        public IReadOnlyList<GroupSubject> GroupSubjects { get; set; } = new List<GroupSubject>();
     }
 }

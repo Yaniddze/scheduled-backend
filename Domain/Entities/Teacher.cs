@@ -8,6 +8,6 @@ namespace Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public IReadOnlyList<Subject> Subjects { get; set; }
+        public IReadOnlyList<Subject> Subjects { get; set; } = new List<Subject>();
     }
 }
