@@ -40,6 +40,7 @@ namespace Domain.UseCases.Group.GetDetailed
             var result = new
             {
                 group.Id,
+                Owner = group.OwnerId == currentUser.Id,
                 Members = group.Members.Select(x => x.UserName),
                 Subjects = group.GroupSubjects
                     .OrderByDescending(x => x.StartDate)

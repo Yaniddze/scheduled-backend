@@ -24,5 +24,7 @@ namespace Schedule.Controllers.App
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateGroupInput request) => 
             await _dispatcher.DispatchAsync(request);
+        
+        
     }
 }
