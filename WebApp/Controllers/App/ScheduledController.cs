@@ -22,8 +22,11 @@ namespace Schedule.Controllers.App
         public async Task<IActionResult> Create([FromBody] CreateScheduleInput request) => 
             await _dispatcher.DispatchAsync(request);
         
-        [HttpDelete]
-        public async Task<IActionResult> Remove([FromBody] DeleteScheduleInput request) => 
-            await _dispatcher.DispatchAsync(request);
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Remove([FromRoute] int id) => 
+            await _dispatcher.DispatchAsync(new DeleteScheduleInput
+            {
+                ScheduledId = id
+            });
     }
 }

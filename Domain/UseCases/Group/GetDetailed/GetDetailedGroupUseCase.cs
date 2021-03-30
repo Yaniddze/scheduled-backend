@@ -42,7 +42,7 @@ namespace Domain.UseCases.Group.GetDetailed
                 group.Id,
                 Owner = group.OwnerId == currentUser.Id,
                 Members = group.Members.Select(x => x.UserName),
-                Subjects = group.GroupSubjects
+                Tasks = group.GroupSubjects
                     .OrderByDescending(x => x.StartDate)
                     .Select(x => new
                     {
@@ -52,7 +52,12 @@ namespace Domain.UseCases.Group.GetDetailed
                         SubjectName = x.Subject.Name,
                         Teacher = x.Subject.Teacher.Name,
                     })
-                    .GroupBy(x => $"{x.StartDate.Day}-{x.StartDate.Month}-{x.StartDate.Year}"),
+                    .GroupBy(x => $"{x.StartDate.Day}-{x.StartDate.Month}-{x.StartDate.Year}")
+                    .Select(x => new
+                    {
+                        Date = x.Key,
+                        Subjects = x.Select(z => z)
+                    }),
             };
 
             return SuccessData(result);
