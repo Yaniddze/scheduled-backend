@@ -8,7 +8,7 @@ namespace Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public IReadOnlyList<User> Members { get; set; }
+        public List<User> Members { get; set; }
         public IReadOnlyList<GroupSubject> GroupSubjects { get; set; }
 
         public int OwnerId { get; set; }
