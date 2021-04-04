@@ -11,15 +11,9 @@ namespace Domain.Entities
         public List<User> Members { get; set; } = new List<User>();
         public IReadOnlyList<GroupSubject> GroupSubjects { get; set; } = new List<GroupSubject>();
 
-        public int OwnerId { get; set; }
-        public User Owner { get; set; }
-
-        public Group(string name, User owner)
+        public Group(string name, User owner = null)
         {
             Name = name;
-
-            Owner = owner;
-            OwnerId = owner.Id;
         }
         
         protected Group() {}

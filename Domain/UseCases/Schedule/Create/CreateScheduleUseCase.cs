@@ -34,11 +34,6 @@ namespace Domain.UseCases.Schedule.Create
             {
                 return Failure("Группа не найдена");
             }
-
-            if (group.OwnerId != currentUser.Id)
-            {
-                return Failure("Вы не имеете прав для редактирования этой группы");
-            }
             
             var subject = await _context.Subjects
                 .FirstOrDefaultAsync(x => x.Id == request.SubjectId, cancellationToken);

@@ -30,7 +30,7 @@ namespace Domain.UseCases.Group.GetDetailed
                 .Include(x => x.GroupSubjects)
                 .ThenInclude(x => x.Subject)
                 .ThenInclude(x => x.Teacher)
-                .FirstOrDefaultAsync(x => x.Members.Contains(currentUser) || x.OwnerId == currentUser.Id, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Members.Contains(currentUser), cancellationToken);
 
             if (group is null)
             {
@@ -40,7 +40,7 @@ namespace Domain.UseCases.Group.GetDetailed
             var result = new
             {
                 group.Id,
-                Owner = group.OwnerId == currentUser.Id,
+                Owner = false,
                 Members = group.Members.Select(x => x.UserName),
                 Tasks = group.GroupSubjects
                     .OrderByDescending(x => x.StartDate)

@@ -27,7 +27,7 @@ namespace Domain.UseCases.Group.Get
             var currentUser = await _mediator.Send(new GetCurrentUserInput(), cancellationToken);
 
             var groups = await _context.Groups
-                .Where(x => x.Members.Contains(currentUser) || x.OwnerId == currentUser.Id)
+                .Where(x => x.Members.Contains(currentUser))
                 .Select(x => new
                 {
                     x.Id,

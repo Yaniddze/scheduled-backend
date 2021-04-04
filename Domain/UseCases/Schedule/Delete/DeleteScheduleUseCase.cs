@@ -26,7 +26,7 @@ namespace Domain.UseCases.Schedule.Delete
             var currentUser = await _mediator.Send(new GetCurrentUserInput(), cancellationToken);
 
             var group = await _context.GroupSubjects
-                .FirstOrDefaultAsync(x => x.Id == request.ScheduledId && x.Group.OwnerId == currentUser.Id, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == request.ScheduledId, cancellationToken);
 
             if (group is null)
             {
