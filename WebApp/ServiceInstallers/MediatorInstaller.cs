@@ -14,6 +14,7 @@ namespace Schedule.ServiceInstallers
         {
             services.AddMediatR(x => x.AsScoped(),
                 typeof(DomainExtensions).Assembly,
+                typeof(InfrastructureInstaller).Assembly,
                 typeof(IServiceInstaller).Assembly
             );
             

@@ -12,7 +12,6 @@ namespace Domain.Entities
         public bool Deleted { get; private set; }
 
         public IReadOnlyList<Group> Groups { get; set; }
-        public IReadOnlyList<Group> OwnedGroups { get; set; }
         
         public DateTime RegistrationDate { get; private set; }
 
