@@ -8,9 +8,7 @@ namespace Domain.Entities
         public int Id { get; set; }
 
         public DateTime StartDate { get; set; }
-        public int DurationInMinutes { get; set; }     
-        
-        public string Cabinet { get; set; }
+        public int DurationInMinutes { get; set; }
 
         public Subject Subject { get; set; }
         public int SubjectId { get; set; }

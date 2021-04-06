@@ -54,17 +54,22 @@ namespace Domain.Services.Parser
                             continue;
                         }
                         
-                        var teacher = await _context.Teachers.FirstOrDefaultAsync(x => x.Name == subject.Teacher);
+                        Teacher teacher = null;
 
-                        if (teacher is null)
+                        if (!string.IsNullOrEmpty(subject.Teacher)) 
                         {
-                            teacher = new Teacher
-                            {
-                                Name = subject.Teacher
-                            };
+                            teacher = await _context.Teachers.FirstOrDefaultAsync(x => x.Name == subject.Teacher);
 
-                            _context.Teachers.Add(teacher);
-                            await _context.SaveChangesAsync();
+                            if (teacher is null)
+                            {
+                                teacher = new Teacher
+                                {
+                                    Name = subject.Teacher
+                                };
+
+                                _context.Teachers.Add(teacher);
+                                await _context.SaveChangesAsync();
+                            }
                         }
 
                         var foundSubject = await _context.Subjects.FirstOrDefaultAsync(x => x.Name == subject.SubjectName && x.TeacherId == teacher.Id);
@@ -94,7 +99,6 @@ namespace Domain.Services.Parser
                         
                         var groupSubject = new GroupSubject
                         {
-                            Cabinet = subject.Cabinet,
                             DurationInMinutes = 95,
                             Group = foundGroup,
                             GroupId = foundGroup.Id,

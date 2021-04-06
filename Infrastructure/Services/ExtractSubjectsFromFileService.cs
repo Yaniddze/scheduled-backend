@@ -96,7 +96,6 @@ namespace Infrastructure.Services
                         {
                             Number = parsedNumber,
                             Teacher = string.Join("\n", teacherMatches),
-                            Cabinet = "",
                             SubjectName = excludeTeachersText,
                         });
                     }

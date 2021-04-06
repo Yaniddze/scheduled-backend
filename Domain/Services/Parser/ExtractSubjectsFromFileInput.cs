@@ -33,6 +33,5 @@ namespace Domain.Services.Parser
         public int Number { get; set; }
         public string SubjectName { get; set; }
         public string Teacher { get; set; }
-        public string Cabinet { get; set; }
     }
 }

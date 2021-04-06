@@ -13,8 +13,7 @@ namespace Infrastructure.Data.Configuration
             builder
                 .HasOne(x => x.Teacher)
                 .WithMany(x => x.Subjects)
-                .HasForeignKey(x => x.TeacherId)
-                .IsRequired();
+                .HasForeignKey(x => x.TeacherId);
         }
     }
 }

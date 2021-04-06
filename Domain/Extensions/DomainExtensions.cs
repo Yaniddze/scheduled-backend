@@ -5,7 +5,9 @@ using Domain.Abstractions;
  using Domain.Abstractions.Data;
  using Domain.Abstractions.Mediator;
  using Domain.Abstractions.Queries;
- using Domain.UseCases.Queries;
+using Domain.Background;
+using Domain.Services.Parser;
+using Domain.UseCases.Queries;
  using Microsoft.Extensions.DependencyInjection;
 
 namespace Domain.Extensions
@@ -17,7 +19,10 @@ namespace Domain.Extensions
         {
             services
                 .AddTransient<IDateTimeProvider, DateTimeProvider>()
-                .AddQueryHandlers();
+                .AddTransient<ParserService>()
+                .AddHostedService<ParserBackgroundService>()
+                .AddQueryHandlers()
+                ;
         } 
         
         private static IServiceCollection AddQueryHandlers(this IServiceCollection services)
