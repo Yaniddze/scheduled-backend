@@ -1,4 +1,5 @@
 ﻿using Domain.Extensions;
+using Infrastructure.Extensions;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +15,7 @@ namespace Schedule.ServiceInstallers
         {
             services.AddMediatR(x => x.AsScoped(),
                 typeof(DomainExtensions).Assembly,
-                typeof(InfrastructureInstaller).Assembly,
+                typeof(InfrastructureExtension).Assembly,
                 typeof(IServiceInstaller).Assembly
             );
             

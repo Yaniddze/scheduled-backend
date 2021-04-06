@@ -72,7 +72,7 @@ namespace Domain.Services.Parser
                             }
                         }
 
-                        var foundSubject = await _context.Subjects.FirstOrDefaultAsync(x => x.Name == subject.SubjectName && x.TeacherId == teacher.Id);
+                        var foundSubject = await _context.Subjects.FirstOrDefaultAsync(x => x.Name == subject.SubjectName && x.Teacher == teacher);
                         
                         if (foundSubject is null)
                         {
@@ -80,7 +80,7 @@ namespace Domain.Services.Parser
                             {
                                 Name = subject.SubjectName,
                                 Teacher = teacher,
-                                TeacherId = teacher.Id
+                                TeacherId = teacher?.Id
                             };
 
                             _context.Subjects.Add(foundSubject);
@@ -91,7 +91,7 @@ namespace Domain.Services.Parser
                         
                         if (foundGroup is null)
                         {
-                            foundGroup = new Group(subject.SubjectName);
+                            foundGroup = new Group(group.Name);
 
                             _context.Groups.Add(foundGroup);
                             await _context.SaveChangesAsync();

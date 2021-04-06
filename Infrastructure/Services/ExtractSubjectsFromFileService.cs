@@ -7,6 +7,7 @@ using Domain.Services.Parser;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System;
 
 namespace Infrastructure.Services 
 {
@@ -89,7 +90,7 @@ namespace Infrastructure.Services
 
                         if (!int.TryParse(number, out parsedNumber)) 
                         {
-                            parsedNumber = group.Subjects.Last().Number + 1;
+                            parsedNumber = (group.Subjects.LastOrDefault()?.Number ?? 0) + 1;
                         }
 
                         group.Subjects.Add(new ExtractSubject
@@ -102,6 +103,32 @@ namespace Infrastructure.Services
                 }
                 AddGroupToResult(result, group);
             });
+
+            result.TimeStart = header.Contains("12:30") ? "12:30" : "8:30";
+            var now = DateTime.Now;
+
+            var newHeader = header.Replace(result.TimeStart, "");
+
+            var numberRegex = new Regex(@"\d.+");
+            var number = numberRegex.Match(newHeader).Value;
+
+            var parsed = 1;
+            int.TryParse(number, out parsed);
+
+            if (now.Day == parsed) 
+            {
+                result.Date = new DateTime(now.Year, now.Month, now.Day);
+            }
+            var yesterday = (now - TimeSpan.FromDays(1));
+            if (yesterday.Day == parsed) 
+            {
+                result.Date = new DateTime(yesterday.Year, yesterday.Month, yesterday.Day);
+            }
+            var tomorrow = (now + TimeSpan.FromDays(1));
+            if (tomorrow.Day == parsed) 
+            {
+                result.Date = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day);
+            }
 
             return result;
         }
