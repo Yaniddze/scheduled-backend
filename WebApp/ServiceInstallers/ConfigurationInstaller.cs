@@ -1,4 +1,5 @@
-﻿using Infrastructure.Configuration;
+﻿using Infrastructure.Abstractions;
+using Infrastructure.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,7 +15,9 @@ namespace Schedule.ServiceInstallers
             services
                 .Configure<AuthConfiguration>(configuration.GetSection("Auth"))
                 .Configure<CaptchaConfiguration>(configuration.GetSection("ReCaptcha"))
-                .Configure<AdminConfiguration>(configuration.GetSection("Admin"));
+                .Configure<AdminConfiguration>(configuration.GetSection("Admin"))
+                .Configure<LinksExtractorConfig>(configuration.GetSection("LinksExtractorConfig"))
+                ;
         }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Infrastructure.Abstractions;
 using Infrastructure.Services;
+using Microsoft.Extensions.Options;
+using Moq;
 using NUnit.Framework;
 
 namespace Tests
@@ -11,11 +14,19 @@ namespace Tests
         [Test]
         public async Task simple_test()
         {
-            var service = new FileLinkExtractorService(new HttpClient());
+            var optionsMoq = new Mock<IOptions<LinksExtractorConfig>>();
 
-            await service.Handle(null, CancellationToken.None);
+            optionsMoq.Setup(x => x.Value)
+                .Returns(new LinksExtractorConfig {
+                    Url = "https://sustec.ru/?p=11546",
+                    FilesDivClass = "entry-body",
+                });
+
+            var service = new FileLinkExtractorService(new HttpClient(), optionsMoq.Object);
+
+            var result = await service.Handle(null, CancellationToken.None);
             
-            Assert.True(true);
+            Assert.IsNotEmpty(result);
         }
     }
 }
