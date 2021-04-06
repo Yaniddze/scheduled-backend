@@ -19,13 +19,13 @@ namespace Domain.Services.Parser
     {
         public string TimeStart { get; set; }
         public DateTime Date { get; set; }
-        public List<ExtractGroup> Groups { get; set; }
+        public List<ExtractGroup> Groups { get; set; } = new List<ExtractGroup>();
     }
 
     public class ExtractGroup
     {
         public string Name { get; set; }
-        public List<ExtractSubject> Subjects { get; set; }
+        public List<ExtractSubject> Subjects { get; set; } = new List<ExtractSubject>();
     }
     
     public class ExtractSubject
