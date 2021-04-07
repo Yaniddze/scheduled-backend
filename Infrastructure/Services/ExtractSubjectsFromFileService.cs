@@ -23,7 +23,7 @@ namespace Infrastructure.Services
             var table = document.MainDocumentPart.Document.Body.Elements<Table>().First();
 
             var groupRegex = new Regex(@"^[А-Я].\-(\d..|\d...)\/(б|к)$");
-            var teacherRegex = new Regex(@"[А-Я].{0,12} [А-Я]\.[А-Я]\. ?(\d.+|\s?)$");
+            var teacherRegex = new Regex(@"[А-Я].{0,12} [А-Я]\.[А-Я]\.( |)(\d.{2}|\s?)");
 
             var count = table.Elements<TableRow>().Count();
 
@@ -31,7 +31,7 @@ namespace Infrastructure.Services
             var groupItem = new List<TableRow>();
             
             // Группирую таблицы по надписи "День" слева в заголовке таблицы 
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var item = table.Elements<TableRow>().ElementAt(i);
 
@@ -59,9 +59,9 @@ namespace Infrastructure.Services
                 var cellCount = firstRow.Elements<TableCell>().Count(); 
 
                 // сдвиг для колонок День и № предмета
-                for (int i = 2; i < cellCount; i++)
+                for (var i = 2; i < cellCount; i++)
                 {
-                    for (int j = 0; j < rowsCount; j++)
+                    for (var j = 0; j < rowsCount; j++)
                     {
                         var row = rows[j];
                         var cell = row.Elements<TableCell>().ElementAt(i);
@@ -109,11 +109,10 @@ namespace Infrastructure.Services
 
             var newHeader = header.Replace(result.TimeStart, "");
 
-            var numberRegex = new Regex(@"\d.+");
-            var number = numberRegex.Match(newHeader).Value;
+            var numberRegex = new Regex(@"\d.");
+            var number = numberRegex.Matches(newHeader).LastOrDefault()?.Value ?? "";
 
-            var parsed = 1;
-            int.TryParse(number, out parsed);
+            int.TryParse(number, out var parsed);
 
             if (now.Day == parsed) 
             {
@@ -145,7 +144,11 @@ namespace Infrastructure.Services
         {
             if (!string.IsNullOrEmpty(group.Name))
             {
-                result.Groups.Add(group);
+                result.Groups.Add(new ExtractGroup
+                {
+                    Name = group.Name,
+                    Subjects = group.Subjects,
+                });
             }
         }
     }

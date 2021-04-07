@@ -40,6 +40,7 @@ namespace Domain.Services.Parser
                         .Where(x => x.StartDate.Day == extractResult.Date.Day)
                         .Where(x => x.StartDate.Year == extractResult.Date.Year)
                         .Where(x => x.StartDate.Month == extractResult.Date.Month)
+                        .Where(x => x.Group.Name == group.Name)
                         .DeleteAsync();
 
                     var sorted = group.Subjects
@@ -50,7 +51,6 @@ namespace Domain.Services.Parser
                     {
                         if (string.IsNullOrEmpty(subject.SubjectName))
                         {
-                            RecalculateStartTime(ref startTime, extractResult);
                             continue;
                         }
                         
@@ -102,7 +102,7 @@ namespace Domain.Services.Parser
                             DurationInMinutes = 95,
                             Group = foundGroup,
                             GroupId = foundGroup.Id,
-                            StartDate = extractResult.Date.Add(startTime),
+                            StartDate = extractResult.Date.Add(AddTime(startTime, subject.Number, extractResult)),
                             Subject = foundSubject,
                             SubjectId = foundSubject.Id,
                         };
@@ -110,30 +110,47 @@ namespace Domain.Services.Parser
                         _context.GroupSubjects.Add(groupSubject);
 
                         await _context.SaveChangesAsync();
-
-                        RecalculateStartTime(ref startTime, extractResult);
                     }
                 }
             }
         }
 
-        private static void RecalculateStartTime(ref TimeSpan startTime, ExtractResult extractResult)
+        private static TimeSpan AddTime(TimeSpan startTime, int position, ExtractResult extractResult)
         {
-            if (startTime.Minutes == 10 * 60 + 5)
+            if (startTime == TimeSpan.FromMinutes(8 * 60 + 30))
             {
-                if (extractResult.Date.DayOfWeek == DayOfWeek.Saturday)
+                switch (position)
                 {
-                    startTime += TimeSpan.FromMinutes(110);
-                }
-                else
-                {
-                    startTime += TimeSpan.FromMinutes(130);
+                    case 1:
+                        return TimeSpan.FromMinutes(8 * 60 + 30);
+                    case 2:
+                        return TimeSpan.FromMinutes(10 * 60 + 15);
+                    case 3:
+                        return TimeSpan.FromMinutes(12 * 60 + 30);
+                    case 4:
+                        return TimeSpan.FromMinutes(14 * 60 + 15);
+                    case 5:
+                        return TimeSpan.FromMinutes(16 * 60);
                 }
             }
             else
             {
-                startTime += TimeSpan.FromMinutes(95);
+                switch (position)
+                {
+                    case 1:
+                        return TimeSpan.FromMinutes(10 * 60 + 15);
+                    case 2:
+                        return TimeSpan.FromMinutes(12 * 60 + 30);
+                    case 3:
+                        return TimeSpan.FromMinutes(14 * 60 + 15);
+                    case 4:
+                        return TimeSpan.FromMinutes(16 * 60);
+                    case 5:
+                        return TimeSpan.FromMinutes(17 * 60 + 45);
+                }
             }
+            
+            return TimeSpan.Zero;
         }
     }
 }

@@ -43,14 +43,14 @@ namespace Domain.UseCases.Group.GetDetailed
                 Owner = false,
                 Members = group.Members.Select(x => x.UserName),
                 Tasks = group.GroupSubjects
-                    .OrderByDescending(x => x.StartDate)
+                    .OrderBy(x => x.StartDate)
                     .Select(x => new
                     {
                         x.Id,
                         x.StartDate,
                         x.DurationInMinutes,
                         SubjectName = x.Subject.Name,
-                        Teacher = x.Subject.Teacher.Name,
+                        Teacher = x.Subject.Teacher?.Name,
                     })
                     .GroupBy(x => $"{x.StartDate.Day}-{x.StartDate.Month}-{x.StartDate.Year}")
                     .Select(x => new
