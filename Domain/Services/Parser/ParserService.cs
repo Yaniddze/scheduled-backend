@@ -138,15 +138,15 @@ namespace Domain.Services.Parser
                 switch (position)
                 {
                     case 1:
-                        return TimeSpan.FromMinutes(10 * 60 + 15);
-                    case 2:
                         return TimeSpan.FromMinutes(12 * 60 + 30);
-                    case 3:
+                    case 2:
                         return TimeSpan.FromMinutes(14 * 60 + 15);
-                    case 4:
+                    case 3:
                         return TimeSpan.FromMinutes(16 * 60);
-                    case 5:
+                    case 4:
                         return TimeSpan.FromMinutes(17 * 60 + 45);
+                    case 5:
+                        return TimeSpan.FromMinutes(19 * 60 + 20);
                 }
             }
             
