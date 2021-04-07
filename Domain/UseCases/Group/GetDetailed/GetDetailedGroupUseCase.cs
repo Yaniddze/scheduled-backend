@@ -30,7 +30,7 @@ namespace Domain.UseCases.Group.GetDetailed
                 .Include(x => x.GroupSubjects)
                 .ThenInclude(x => x.Subject)
                 .ThenInclude(x => x.Teacher)
-                .FirstOrDefaultAsync(x => x.Members.Contains(currentUser), cancellationToken);
+                .FirstOrDefaultAsync(x => x.Members.Contains(currentUser) && x.Id == request.Id, cancellationToken);
 
             if (group is null)
             {

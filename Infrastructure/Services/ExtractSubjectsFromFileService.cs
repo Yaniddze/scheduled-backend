@@ -22,7 +22,7 @@ namespace Infrastructure.Services
 
             var table = document.MainDocumentPart.Document.Body.Elements<Table>().First();
 
-            var groupRegex = new Regex(@"^[А-Я].\-(\d..|\d...)\/(б|к)$");
+            var groupRegex = new Regex(@"^[А-Я].\-(\d..|\d...)(\/(б|к))?$");
             var teacherRegex = new Regex(@"[А-Я].{0,12} [А-Я]\.[А-Я]\.( |)(\d.{2}|\s?)");
 
             var count = table.Elements<TableRow>().Count();
