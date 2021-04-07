@@ -2,6 +2,7 @@
 using Domain.Enums;
 using Domain.UseCases.Schedule.Create;
 using Domain.UseCases.Schedule.Delete;
+using Domain.UseCases.Schedule.Get;
 using Microsoft.AspNetCore.Mvc;
 using Schedule.Identity;
 using Schedule.Implementations;
@@ -17,6 +18,10 @@ namespace Schedule.Controllers.App
         {
             _dispatcher = dispatcher;
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] GetScheduleInput request) => 
+            await _dispatcher.DispatchAsync(request);
         
         [HttpPut]
         public async Task<IActionResult> Create([FromBody] CreateScheduleInput request) => 
