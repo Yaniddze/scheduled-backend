@@ -38,7 +38,7 @@ namespace Domain.Background
                 await unit.Cancel();
             }
             finally {
-                await Task.Delay(1000 * 60 * 30);
+                await Task.Delay(60000);
             }
         }
     }
