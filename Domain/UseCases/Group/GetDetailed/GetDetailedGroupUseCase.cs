@@ -1,4 +1,4 @@
-﻿    using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain.Abstractions.Data;
@@ -24,13 +24,11 @@ namespace Domain.UseCases.Group.GetDetailed
 
         public async Task<IOutput> Handle(GetDetailedGroupInput request, CancellationToken cancellationToken)
         {
-            var currentUser = await _mediator.Send(new GetCurrentUserInput(), cancellationToken);
-            
             var group = await _context.Groups
                 .Include(x => x.GroupSubjects)
                 .ThenInclude(x => x.Subject)
                 .ThenInclude(x => x.Teacher)
-                .FirstOrDefaultAsync(x => x.Members.Contains(currentUser) && x.Id == request.Id, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
             if (group is null)
             {
@@ -41,7 +39,6 @@ namespace Domain.UseCases.Group.GetDetailed
             {
                 group.Id,
                 Owner = false,
-                Members = group.Members.Select(x => x.UserName),
                 Tasks = group.GroupSubjects
                     .Select(x => new
                     {

@@ -7,8 +7,6 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        public List<User> Members { get; set; } = new List<User>();
         public IReadOnlyList<GroupSubject> GroupSubjects { get; set; } = new List<GroupSubject>();
 
         public Group(string name, User owner = null)

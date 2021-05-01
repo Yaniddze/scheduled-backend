@@ -9,10 +9,6 @@ namespace Infrastructure.Data.Configuration
         public void Configure(EntityTypeBuilder<Group> builder)
         {
             builder.HasKey(x => x.Id);
-
-            builder
-                .HasMany(x => x.Members)
-                .WithMany(x => x.Groups);
         }
     }
 }
