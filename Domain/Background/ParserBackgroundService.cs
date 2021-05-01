@@ -19,26 +19,29 @@ namespace Domain.Background
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using var services = _provider.CreateScope();
+            while(true) 
+            {
+                using var services = _provider.CreateScope();
 
-            var logger = services.ServiceProvider.GetRequiredService<ILogger<ParserBackgroundService>>();
-            var service = services.ServiceProvider.GetRequiredService<ParserService>();
-            var unitCreator = services.ServiceProvider.GetRequiredService<IUnitOfWorkCreator>();
+                var logger = services.ServiceProvider.GetRequiredService<ILogger<ParserBackgroundService>>();
+                var service = services.ServiceProvider.GetRequiredService<ParserService>();
+                var unitCreator = services.ServiceProvider.GetRequiredService<IUnitOfWorkCreator>();
 
-            logger.LogInformation("Start subjects parsing");
+                logger.LogInformation("Start subjects parsing");
 
-            using var unit = unitCreator.CreateUnitOfWork();
+                using var unit = unitCreator.CreateUnitOfWork();
 
-            try {
-                await service.ParseSubjects();
-                await unit.Apply();
-            }
-            catch (Exception e) {
-                logger.LogError("Parsing failed", e.Message);
-                await unit.Cancel();
-            }
-            finally {
-                await Task.Delay(60000);
+                try {
+                    await service.ParseSubjects();
+                    await unit.Apply();
+                }
+                catch (Exception e) {
+                    logger.LogError("Parsing failed", e.Message);
+                    await unit.Cancel();
+                }
+                finally {
+                    await Task.Delay(60000);
+                }
             }
         }
     }
