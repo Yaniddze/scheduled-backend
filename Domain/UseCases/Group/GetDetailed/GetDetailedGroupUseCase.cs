@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿    using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain.Abstractions.Data;
@@ -43,7 +43,6 @@ namespace Domain.UseCases.Group.GetDetailed
                 Owner = false,
                 Members = group.Members.Select(x => x.UserName),
                 Tasks = group.GroupSubjects
-                    .OrderBy(x => x.StartDate)
                     .Select(x => new
                     {
                         x.Id,
@@ -52,6 +51,7 @@ namespace Domain.UseCases.Group.GetDetailed
                         SubjectName = x.Subject.Name,
                         Teacher = x.Subject.Teacher?.Name,
                     })
+                    .OrderBy(x => x.StartDate)
                     .GroupBy(x => $"{x.StartDate.Day}-{x.StartDate.Month}-{x.StartDate.Year}")
                     .Select(x => new
                     {

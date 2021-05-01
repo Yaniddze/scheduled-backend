@@ -30,6 +30,7 @@ namespace Domain.UseCases.Schedule.Get
                     SubjectName = x.Subject.Name,
                     Teacher = x.Subject.Teacher.Name,
                 })
+                .OrderBy(x => x.StartDate)
                 .ToListAsync(cancellationToken);
             
             return ActionOutput.SuccessData(lessons);
