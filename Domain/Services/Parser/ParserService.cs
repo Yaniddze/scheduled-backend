@@ -67,13 +67,14 @@ namespace Domain.Services.Parser
                         }
                     }
 
-                    var foundSubject = await _context.Subjects.FirstOrDefaultAsync(x => x.Name == subject.SubjectName && x.Teacher == teacher);
+                    var foundSubject = await _context.Subjects.FirstOrDefaultAsync(x => x.ParsedName == subject.SubjectName && x.Teacher == teacher);
                     
                     if (foundSubject is null)
                     {
-                        foundSubject = new Subject()
+                        foundSubject = new Subject
                         {
                             Name = subject.SubjectName,
+                            ParsedName = subject.SubjectName,
                             Teacher = teacher,
                             TeacherId = teacher?.Id
                         };
