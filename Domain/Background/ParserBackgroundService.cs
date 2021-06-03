@@ -24,7 +24,7 @@ namespace Domain.Background
                 using var services = _provider.CreateScope();
 
                 var logger = services.ServiceProvider.GetRequiredService<ILogger<ParserBackgroundService>>();
-                var service = services.ServiceProvider.GetRequiredService<ParserService>();
+                var service = services.ServiceProvider.GetRequiredService<ParserServiceBackground>();
                 var unitCreator = services.ServiceProvider.GetRequiredService<IUnitOfWorkCreator>();
 
                 logger.LogInformation("Start subjects parsing");

@@ -11,12 +11,12 @@ namespace Schedule.Controllers.Account
     public class AccountController: Controller
     {
         private readonly IUseCaseDispatcher _dispatcher;
-        private readonly ParserService _service;
+        private readonly ParserServiceBackground _serviceBackground;
 
-        public AccountController(IUseCaseDispatcher dispatcher, ParserService service)
+        public AccountController(IUseCaseDispatcher dispatcher, ParserServiceBackground serviceBackground)
         {
             _dispatcher = dispatcher;
-            _service = service;
+            _serviceBackground = serviceBackground;
         }
 
         [HttpPost("login")]
@@ -30,7 +30,7 @@ namespace Schedule.Controllers.Account
         [HttpGet]
         public async Task<IActionResult> ASdd() 
         {
-            await _service.ParseSubjects();
+            await _serviceBackground.ParseSubjects();
 
             return Ok();
         }

@@ -19,6 +19,7 @@ namespace Domain.Extensions
         {
             services
                 .AddTransient<IDateTimeProvider, DateTimeProvider>()
+                .AddTransient<ParserServiceBackground>()
                 .AddTransient<ParserService>()
                 .AddHostedService<ParserBackgroundService>()
                 .AddQueryHandlers()
