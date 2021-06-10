@@ -35,6 +35,8 @@ namespace Domain.Services.Parser
                     .Where(x => x.StartDate.Year == extractResult.Date.Year)
                     .Where(x => x.StartDate.Month == extractResult.Date.Month)
                     .Where(x => x.Group.Name == group.Name)
+                    .Where(x => !x.ManualCreated)
+                    .Where(x => !x.ManualDeleted)
                     .DeleteAsync();
 
                 var sorted = group.Subjects
@@ -102,6 +104,15 @@ namespace Domain.Services.Parser
                         Subject = foundSubject,
                         SubjectId = foundSubject.Id,
                     };
+
+                    var any = await _context.GroupSubjects
+                        .Where(x => x.ManualDeleted)
+                        .Where(x => x.StartDate == groupSubject.StartDate)
+                        .Where(x => x.GroupId == groupSubject.GroupId)
+                        .Where(x => x.SubjectId == groupSubject.SubjectId)
+                        .AnyAsync();
+
+                    if (any) continue;
 
                     _context.GroupSubjects.Add(groupSubject);
 

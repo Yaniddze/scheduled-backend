@@ -15,5 +15,8 @@ namespace Domain.Entities
 
         public Group Group { get; set; }
         public int GroupId { get; set; }
+
+        public bool ManualCreated { get; set; }
+        public bool ManualDeleted { get; set; }
     }
 }

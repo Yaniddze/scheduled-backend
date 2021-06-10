@@ -40,6 +40,7 @@ namespace Domain.UseCases.Group.GetDetailed
                 group.Id,
                 Owner = false,
                 Tasks = group.GroupSubjects
+                    .Where(x => !x.ManualDeleted)
                     .Select(x => new
                     {
                         x.Id,

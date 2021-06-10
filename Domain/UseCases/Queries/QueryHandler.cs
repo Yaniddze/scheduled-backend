@@ -47,7 +47,7 @@ namespace Domain.UseCases.Queries
                 .ToList());
         }
 
-        public async Task Delete(int id)
+        public virtual async Task Delete(int id)
         {
             await DbContext.Set<TEntity>()
                 .Where(x => x.Id == id)

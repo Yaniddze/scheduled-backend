@@ -22,6 +22,7 @@ namespace Domain.UseCases.Schedule.Get
             var lessons = await _context.GroupSubjects
                 .Where(x => x.StartDate.Day + "-" + x.StartDate.Month + "-" + x.StartDate.Year == request.Date)
                 .Where(x => x.GroupId == request.GroupId)
+                .Where(x => !x.ManualDeleted)
                 .Select(x => new
                 {
                     x.Id,

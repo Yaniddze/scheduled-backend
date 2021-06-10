@@ -9,7 +9,7 @@ namespace Domain.Entities
         public string Name { get; set; }
         public IReadOnlyList<GroupSubject> GroupSubjects { get; set; } = new List<GroupSubject>();
 
-        public Group(string name, User owner = null)
+        public Group(string name)
         {
             Name = name;
         }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Domain.Abstractions.Data;
 using Domain.Abstractions.Mediator;
 using Domain.Abstractions.Outputs;
+using Domain.Abstractions.Queries;
 using Domain.Entities;
 using Domain.Services.Identity;
 using MediatR;
@@ -14,18 +15,14 @@ namespace Domain.UseCases.Schedule.Create
     public class CreateScheduleUseCase: IUseCase<CreateScheduleInput>
     {
         private readonly IAppContext _context;
-        private readonly IMediator _mediator;
 
-        public CreateScheduleUseCase(IAppContext context, IMediator mediator)
+        public CreateScheduleUseCase(IAppContext context)
         {
             _context = context;
-            _mediator = mediator;
         }
 
         public async Task<IOutput> Handle(CreateScheduleInput request, CancellationToken cancellationToken)
         {
-            var currentUser = await _mediator.Send(new GetCurrentUserInput(), cancellationToken);
-
             var group = await _context.Groups
                 .Include(x => x.GroupSubjects)
                 .FirstOrDefaultAsync(x => x.Id == request.GroupId, cancellationToken);
@@ -53,16 +50,17 @@ namespace Domain.UseCases.Schedule.Create
                 
                 Subject = subject,
                 SubjectId = subject.Id,
+                
+                ManualCreated = true,
+                
+                
             };
 
             _context.GroupSubjects.Add(groupSubject);
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return SuccessData(new
-            {
-                groupSubject.Id,
-            });
+            return ObjectOutput.CreateWithId(groupSubject.Id);
         }
     }
 }
